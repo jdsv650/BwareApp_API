@@ -1,0 +1,9 @@
+c:\Users\James\documents\visual studio 2013\Projects\Bware\Bware.Data.Model\bin\Debug\Bware.Data.Model.dll
+c:\Users\James\documents\visual studio 2013\Projects\Bware\Bware.Data.Model\bin\Debug\Bware.Data.Model.pdb
+c:\Users\James\documents\visual studio 2013\Projects\Bware\Bware.Data.Model\obj\Debug\Bware.Data.Model.dll
+c:\Users\James\documents\visual studio 2013\Projects\Bware\Bware.Data.Model\obj\Debug\Bware.Data.Model.pdb
+C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data.Model\bin\Debug\Bware.Data.Model.dll.config
+C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data.Model\bin\Debug\EntityFramework.dll
+C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data.Model\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data.Model\bin\Debug\EntityFramework.xml
+C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data.Model\bin\Debug\EntityFramework.SqlServer.xml
