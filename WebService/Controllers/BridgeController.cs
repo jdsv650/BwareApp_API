@@ -8,6 +8,7 @@ using System.Web.Http;
 
 namespace WebService.Controllers
 {
+    [Authorize]
     public class BridgeController : ApiController
     {
         Adapters.Interface.IBridgeAdapter _adapter;

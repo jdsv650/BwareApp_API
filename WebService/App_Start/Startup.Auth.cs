@@ -38,7 +38,10 @@ namespace WebService
                 TokenEndpointPath = new PathString("/Token"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+                // default -----  AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+
+                // expires 200 years for now
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(7300),
                 AllowInsecureHttp = true
             };
 
