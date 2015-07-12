@@ -41,7 +41,7 @@ namespace WebService
                 // default -----  AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
 
                 // expires 200 years for now
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(7300),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(73000),
                 AllowInsecureHttp = true
             };
 
