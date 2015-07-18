@@ -14,3 +14,4 @@ C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data\obj\Debug\
 C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data\obj\Debug\Bware.Data.csproj.GenerateResource.Cache
 C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data\obj\Debug\Bware.Data.Migrations.stateId_nullable.resources
 C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data\obj\Debug\Bware.Data.Migrations.addLocationDescription.resources
+C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data\obj\Debug\Bware.Data.Migrations.Added_country_weightdouble_to_bridge.resources

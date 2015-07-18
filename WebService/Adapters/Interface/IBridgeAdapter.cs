@@ -10,6 +10,9 @@ namespace WebService.Adapters.Interface
     interface IBridgeAdapter
     {
         IEnumerable<Bridge> getAllBridges();
+
+        void saveBridge(Bridge bridge);
       
     }
+
 }

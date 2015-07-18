@@ -18,5 +18,14 @@ namespace WebService.Adapters.Data
             bridges = db.Bridges.ToList();
             return bridges;
         }
+
+
+        public void saveBridge(Bridge bridge)
+        {
+            var db = new BwareContext();
+
+            db.Bridges.Add(bridge);
+            db.SaveChanges();
+        }
     }
 }

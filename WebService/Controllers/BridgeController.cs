@@ -32,8 +32,9 @@ namespace WebService.Controllers
         }
 
         // POST: api/Bridge
-        public void Post([FromBody]string value)
+        public void Post(Bridge bridge)
         {
+            _adapter.saveBridge(bridge);
         }
 
         // PUT: api/Bridge/5Adapters

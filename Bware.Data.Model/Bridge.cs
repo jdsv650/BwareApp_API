@@ -22,9 +22,11 @@ namespace Bware.Data.Model
         public String County { get; set; }
         public String Township { get; set; }
         public String Zip { get; set; }
+        public String Country { get; set; }
         public double? Height { get; set; }
         public double? WeightStraight { get; set; }
         public double? WeightCombination { get; set; }
+        public double? WeightDouble { get; set; }
         public bool isRposted { get; set; }
         public String OtherPosting { get; set; }
         public int? StateId { get; set; }

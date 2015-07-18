@@ -59,6 +59,10 @@
     <Compile Include="Migrations\201507022332370_addLocationDescription.Designer.cs">
       <DependentUpon>201507022332370_addLocationDescription.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507171839397_Added_country_weightdouble_to_bridge.cs" />
+    <Compile Include="Migrations\201507171839397_Added_country_weightdouble_to_bridge.Designer.cs">
+      <DependentUpon>201507171839397_Added_country_weightdouble_to_bridge.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -81,6 +85,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507022332370_addLocationDescription.resx">
       <DependentUpon>201507022332370_addLocationDescription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507171839397_Added_country_weightdouble_to_bridge.resx">
+      <DependentUpon>201507171839397_Added_country_weightdouble_to_bridge.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
