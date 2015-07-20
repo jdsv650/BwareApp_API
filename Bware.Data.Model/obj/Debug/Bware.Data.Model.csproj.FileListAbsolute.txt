@@ -7,4 +7,3 @@ C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data.Model\bin\
 C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data.Model\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data.Model\bin\Debug\EntityFramework.xml
 C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data.Model\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data.Model\obj\Debug\Bware.Data.Model.csprojResolveAssemblyReference.cache

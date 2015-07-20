@@ -63,6 +63,10 @@
     <Compile Include="Migrations\201507171839397_Added_country_weightdouble_to_bridge.Designer.cs">
       <DependentUpon>201507171839397_Added_country_weightdouble_to_bridge.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507181101346_temp_data.cs" />
+    <Compile Include="Migrations\201507181101346_temp_data.Designer.cs">
+      <DependentUpon>201507181101346_temp_data.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -88,6 +92,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507171839397_Added_country_weightdouble_to_bridge.resx">
       <DependentUpon>201507171839397_Added_country_weightdouble_to_bridge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507181101346_temp_data.resx">
+      <DependentUpon>201507181101346_temp_data.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

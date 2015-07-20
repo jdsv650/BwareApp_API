@@ -12,6 +12,7 @@ namespace Bware.Data
         public BwareContext() : base("SQLSERVER2012") { }
 
         public DbSet<Model.Bridge> Bridges { get; set; }
+        public DbSet<Model.Temp> Temps { get; set; }
 
     }
 }

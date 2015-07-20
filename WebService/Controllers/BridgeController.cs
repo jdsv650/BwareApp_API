@@ -19,16 +19,27 @@ namespace WebService.Controllers
         }
 
         // GET: api/Bridge
-        public IEnumerable<Bridge> Get()
+        [System.Web.Http.AcceptVerbs("GET")]
+        [System.Web.Http.HttpGet]
+        public IEnumerable<Bridge> GetAll()
         {
             var result = _adapter.getAllBridges();
             return result;
         }
 
         // GET: api/Bridge/5
-        public string Get(int id)
+      //  public string Get(int id)
+     //   {
+      //      return "value";
+      //  }
+
+        [System.Web.Http.AcceptVerbs("GET")]
+        [System.Web.Http.HttpGet]
+      //  [System.Web.Http.Route("Bridge/GetByMiles")]
+        public IEnumerable<Bridge> GetByMiles(double lat, double lon, int miles)
         {
-            return "value";
+            var result = _adapter.getBridgesWithinMiles(lat, lon, miles);
+            return result;
         }
 
         // POST: api/Bridge

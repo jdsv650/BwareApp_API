@@ -15,3 +15,4 @@ C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data\obj\Releas
 C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data\obj\Release\Bware.Data.dll
 C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data\obj\Release\Bware.Data.pdb
 C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data\obj\Release\Bware.Data.Migrations.Added_country_weightdouble_to_bridge.resources
+C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data\obj\Release\Bware.Data.Migrations.temp_data.resources
