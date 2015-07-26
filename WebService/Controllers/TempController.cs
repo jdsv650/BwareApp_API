@@ -7,11 +7,11 @@ using System.Web.Http;
 
 namespace WebService.Controllers
 {
-    [Authorize]
+    [RoutePrefix("Api/Temp")]
     public class TempController : ApiController
     {
         // GET: api/Temp
-        public IEnumerable<string> Get()
+        public IEnumerable<string> GetAll()
         {
             return new string[] { "value1", "value2" };
         }
@@ -22,15 +22,29 @@ namespace WebService.Controllers
             return "value";
         }
 
-        // POST: api/Temp
-        public void Post(Bware.Data.Model.Temp temp)
+        // POST: api/Tem
+        [HttpPost]
+        public void CreateTemp(Bware.Data.Model.Temp temp)
         {
-            
+    
+            using (var context = new Bware.Data.BwareContext())
+            {
+                context.Temps.Add(new Bware.Data.Model.Temp()
+                {
+                    TempId = temp.TempId,
+                    TempString = temp.TempString,
+                });
+
+               context.SaveChanges();
+
+            }
         }
 
         // PUT: api/Temp/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPost]
+        public void PutTemp(int id, [FromBody]string value)
         {
+            Console.WriteLine(value);
         }
 
         // DELETE: api/Temp/5

@@ -19,8 +19,8 @@ namespace WebService.Controllers
         }
 
         // GET: api/Bridge
-        [System.Web.Http.AcceptVerbs("GET")]
-        [System.Web.Http.HttpGet]
+       
+        [HttpGet]
         public IEnumerable<Bridge> GetAll()
         {
             var result = _adapter.getAllBridges();
@@ -33,8 +33,7 @@ namespace WebService.Controllers
       //      return "value";
       //  }
 
-        [System.Web.Http.AcceptVerbs("GET")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
       //  [System.Web.Http.Route("Bridge/GetByMiles")]
         public IEnumerable<Bridge> GetByMiles(double lat, double lon, int miles)
         {
@@ -43,7 +42,8 @@ namespace WebService.Controllers
         }
 
         // POST: api/Bridge
-        public void Post(Bridge bridge)
+        [HttpPost]
+        public void Create(Bridge bridge)
         {
             _adapter.saveBridge(bridge);
         }

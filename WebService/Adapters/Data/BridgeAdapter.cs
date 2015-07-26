@@ -44,6 +44,8 @@ namespace WebService.Adapters.Data
         {
             var db = new BwareContext();
 
+            // Check for valid data so we don't crash please
+
             db.Bridges.Add(bridge);
             db.SaveChanges();
         }
