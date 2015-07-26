@@ -6,4 +6,7 @@
   <parameter name="SQLSERVER2012-Web.config Connection String" description="SQLSERVER2012 Connection String used in web.config by the application to access the database." defaultValue="Data Source=James-PC\SQLSERVER2012;Initial Catalog=Bware;Integrated Security=True" tags="SqlConnectionString">
     <parameterEntry kind="XmlFile" scope="C:\\Users\\James\\Documents\\Visual\ Studio\ 2013\\Projects\\Bware\\WebService\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SQLSERVER2012']/@connectionString" />
   </parameter>
+  <parameter name="SQLSERVER2012_DatabasePublish-Web.config Connection String" description="SQLSERVER2012_DatabasePublish Connection String used in web.config by the application to access the database." defaultValue="SQLSERVER2012_DatabasePublish.ConnetionString" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\James\\Documents\\Visual\ Studio\ 2013\\Projects\\Bware\\WebService\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SQLSERVER2012_DatabasePublish']/@connectionString" />
+  </parameter>
 </parameters>

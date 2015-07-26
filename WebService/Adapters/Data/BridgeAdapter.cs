@@ -40,14 +40,32 @@ namespace WebService.Adapters.Data
         }
 
 
-        public void saveBridge(Bridge bridge)
+        public bool saveBridge(Bridge bridge)
         {
             var db = new BwareContext();
 
-            // Check for valid data so we don't crash please
+            if (bridge == null) return false;
 
-            db.Bridges.Add(bridge);
-            db.SaveChanges();
+            try
+            {
+                // check lat/lon in range
+                if (bridge.Latitude > 90 || bridge.Latitude < -90 || bridge.Longitude > 180 || bridge.Longitude < -180)
+                {
+                    return false;
+                }
+
+                // set DbGeography
+                var sourcePoint = string.Format("POINT({0} {1})", bridge.Longitude.ToString().Replace(',', '.'), bridge.Latitude.ToString().Replace(',', '.'));
+                var bridgeLocation = DbGeography.PointFromText(sourcePoint, 4326);
+                bridge.BridgeLocation = bridgeLocation;
+
+                db.Bridges.Add(bridge);
+                return 1 == db.SaveChanges();
+            }
+            catch
+            {
+                return false;
+            }
         }
 
 

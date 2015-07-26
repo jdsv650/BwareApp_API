@@ -11,7 +11,7 @@ namespace WebService.Adapters.Interface
     {
         IEnumerable<Bridge> getAllBridges();
         IEnumerable<Bridge> getBridgesWithinMiles(double lat, double lon, int miles);
-        void saveBridge(Bridge bridge);
+        bool saveBridge(Bridge bridge);
       
     }
 

@@ -24,7 +24,7 @@ namespace WebService.Controllers
 
         // POST: api/Tem
         [HttpPost]
-        public void CreateTemp(Bware.Data.Model.Temp temp)
+        public void Create(Bware.Data.Model.Temp temp)
         {
     
             using (var context = new Bware.Data.BwareContext())
