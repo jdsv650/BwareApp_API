@@ -41,6 +41,20 @@ namespace WebService.Controllers
             return result;
         }
 
+        [HttpGet]
+        public Bridge GetByLocation(double lat, double lon)
+        {
+            var result = _adapter.getBridgeByLocation(lat, lon);
+            return new Bridge();
+        }
+
+        [HttpGet]
+        public bool RemoveByLocation(double lat, double lon)
+        {
+            var result = _adapter.removeBridgeByLocation(lat, lon);
+            return result;
+        }
+
         // POST: api/Bridge
         [HttpPost]
         public void Create(Bridge bridge)

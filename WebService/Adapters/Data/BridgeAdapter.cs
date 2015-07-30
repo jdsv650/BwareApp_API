@@ -39,6 +39,39 @@ namespace WebService.Adapters.Data
             return bridges;
         }
 
+        public Bridge getBridgeByLocation(double lat, double lon)
+        {
+            var bridge = new Bridge();
+            var db = new BwareContext();
+
+           // if (lat > 90 || lat < -90 || lon > 180 || lon < -180)   {  }
+            // may need to give a bit here instead of ==
+            db.Bridges.Where(b => b.Latitude == lat && b.Longitude == lon).SingleOrDefault();
+
+            return bridge;
+        }
+
+        public bool removeBridgeByLocation(double lat, double lon)
+        {
+            var bridge = new Bridge();
+            var db = new BwareContext();
+
+            try
+            {
+                bridge = getBridgeByLocation(lat, lon);
+
+                if (bridge != null)
+                {
+                    db.Bridges.Remove(bridge);
+                    return 1 == db.SaveChanges();
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         public bool saveBridge(Bridge bridge)
         {
@@ -68,7 +101,6 @@ namespace WebService.Adapters.Data
             }
         }
 
-
-       
     }
+
 }
