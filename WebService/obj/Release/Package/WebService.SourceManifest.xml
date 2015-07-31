@@ -1,4 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sitemanifest>
-  <IisApp path="C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\WebService\obj\Release\Package\PackageTmp" managedRuntimeVersion="v4.0" />
+  <IisApp path="C:\Users\James\Documents\Visual Studio 2013\Projects\Bware2\Bware_API2\WebService\obj\Release\Package\PackageTmp" managedRuntimeVersion="v4.0" />
 </sitemanifest>

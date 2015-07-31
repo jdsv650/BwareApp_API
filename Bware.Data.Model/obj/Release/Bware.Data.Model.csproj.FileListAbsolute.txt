@@ -8,3 +8,12 @@ C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data.Model\bin\
 C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data.Model\obj\Release\Bware.Data.Model.csprojResolveAssemblyReference.cache
 C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data.Model\obj\Release\Bware.Data.Model.dll
 C:\Users\James\Documents\Visual Studio 2013\Projects\Bware\Bware.Data.Model\obj\Release\Bware.Data.Model.pdb
+C:\Users\James\Documents\Visual Studio 2013\Projects\Bware2\Bware_API2\Bware.Data.Model\bin\Release\Bware.Data.Model.dll.config
+C:\Users\James\Documents\Visual Studio 2013\Projects\Bware2\Bware_API2\Bware.Data.Model\bin\Release\Bware.Data.Model.dll
+C:\Users\James\Documents\Visual Studio 2013\Projects\Bware2\Bware_API2\Bware.Data.Model\bin\Release\Bware.Data.Model.pdb
+C:\Users\James\Documents\Visual Studio 2013\Projects\Bware2\Bware_API2\Bware.Data.Model\bin\Release\EntityFramework.dll
+C:\Users\James\Documents\Visual Studio 2013\Projects\Bware2\Bware_API2\Bware.Data.Model\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\James\Documents\Visual Studio 2013\Projects\Bware2\Bware_API2\Bware.Data.Model\bin\Release\EntityFramework.xml
+C:\Users\James\Documents\Visual Studio 2013\Projects\Bware2\Bware_API2\Bware.Data.Model\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\James\Documents\Visual Studio 2013\Projects\Bware2\Bware_API2\Bware.Data.Model\obj\Release\Bware.Data.Model.dll
+C:\Users\James\Documents\Visual Studio 2013\Projects\Bware2\Bware_API2\Bware.Data.Model\obj\Release\Bware.Data.Model.pdb
