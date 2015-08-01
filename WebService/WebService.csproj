@@ -258,6 +258,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Web - Copy.config" />
     <None Include="Properties\PublishProfiles\BwareAPI.pubxml" />
     <None Include="Properties\PublishProfiles\myopenroad.info - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\myopenroad.info - Web Deploy.pubxml">
@@ -290,6 +291,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Web - Copy.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Adapters\Mock\" />
