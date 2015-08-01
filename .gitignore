@@ -3,6 +3,9 @@
 #Web config connnection string-- Use Web.sample.config instead
 Web.config
 
+#publish prof
+*.pubxml
+
 # User-specific files
 *.suo
 *.user
