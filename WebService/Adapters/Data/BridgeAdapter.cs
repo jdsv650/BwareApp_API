@@ -46,7 +46,7 @@ namespace WebService.Adapters.Data
 
            // if (lat > 90 || lat < -90 || lon > 180 || lon < -180)   {  }
             // may need to give a bit here instead of ==
-            db.Bridges.Where(b => b.Latitude == lat && b.Longitude == lon).SingleOrDefault();
+            bridge = db.Bridges.Where(b => b.Latitude == lat && b.Longitude == lon).SingleOrDefault();
 
             return bridge;
         }
