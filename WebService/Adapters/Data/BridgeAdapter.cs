@@ -45,8 +45,8 @@ namespace WebService.Adapters.Data
             var db = new BwareContext();
 
            // if (lat > 90 || lat < -90 || lon > 180 || lon < -180)   {  }
-            // may need to give a bit here instead of ==
-            bridge = db.Bridges.Where(b => b.Latitude == lat && b.Longitude == lon).SingleOrDefault();
+            // may need to give a bit here instead of = 
+            bridge = db.Bridges.Where(b => b.Latitude <= lat + 0.001 && b.Latitude >= lat - 0.001 && b.Longitude <= lon + 0.001 && b.Longitude >= lon - 0.001).SingleOrDefault();
 
             return bridge;
         }

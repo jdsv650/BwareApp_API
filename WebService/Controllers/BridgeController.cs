@@ -45,10 +45,10 @@ namespace WebService.Controllers
         public Bridge GetByLocation(double lat, double lon)
         {
             var result = _adapter.getBridgeByLocation(lat, lon);
-            return new Bridge();
+            return result;
         }
 
-        [HttpGet]
+        [HttpDelete]
         public bool RemoveByLocation(double lat, double lon)
         {
             var result = _adapter.removeBridgeByLocation(lat, lon);
