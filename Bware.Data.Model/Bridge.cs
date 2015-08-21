@@ -12,11 +12,12 @@ namespace Bware.Data.Model
     [DataContract]
     public class Bridge
     {
-        public String BIN { get; set; }
         public DbGeography BridgeLocation { get; set; }
 
         [DataMember]
         public int BridgeId { get; set; }
+        [DataMember]
+        public String BIN { get; set; }
         [DataMember]
         public double Latitude { get; set; }
         [DataMember]
@@ -50,8 +51,6 @@ namespace Bware.Data.Model
         [DataMember]
         public String OtherPosting { get; set; }
         [DataMember]
-        public int? StateId { get; set; }
-        [DataMember]
         public DateTime DateCreated { get; set; }
         [DataMember]
         public DateTime DateModified { get; set; }
@@ -61,6 +60,12 @@ namespace Bware.Data.Model
         public String UserModified { get; set; }
         [DataMember]
         public int NumberOfVotes { get; set; }
+        [DataMember]
+        public String User1Verified { get; set; }
+        [DataMember]
+        public String User2Verified { get; set; }
+        [DataMember]
+        public String User3Verified { get; set; }
         [DataMember]
         public bool isLocked { get; set; }
         

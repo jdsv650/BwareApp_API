@@ -62,6 +62,14 @@ namespace WebService.Controllers
             _adapter.saveBridge(bridge);
         }
 
+        // POST: api/Bridge
+        [HttpPost]
+        [AllowAnonymous]
+        public void Add(Bridge bridge)
+        {
+            _adapter.saveBridge(bridge);
+        }
+
         // PUT: api/Bridge/5Adapters
         public void Put(int id, [FromBody]string value)
         {

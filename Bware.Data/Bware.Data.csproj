@@ -78,6 +78,10 @@
     <Compile Include="Migrations\201507181101346_temp_data.Designer.cs">
       <DependentUpon>201507181101346_temp_data.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508202029360_Update_Bridge_IncludeUserVerifications_ExcludeStateID.cs" />
+    <Compile Include="Migrations\201508202029360_Update_Bridge_IncludeUserVerifications_ExcludeStateID.Designer.cs">
+      <DependentUpon>201508202029360_Update_Bridge_IncludeUserVerifications_ExcludeStateID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -106,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507181101346_temp_data.resx">
       <DependentUpon>201507181101346_temp_data.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508202029360_Update_Bridge_IncludeUserVerifications_ExcludeStateID.resx">
+      <DependentUpon>201508202029360_Update_Bridge_IncludeUserVerifications_ExcludeStateID.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
