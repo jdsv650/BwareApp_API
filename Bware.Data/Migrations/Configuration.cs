@@ -16,6 +16,9 @@ namespace Bware.Data.Migrations
 
         protected override void Seed(Bware.Data.BwareContext context)
         {
+            /*****
+             * PLEASE DON'T SEED ANY MORE DATA!!!
+             * 
             var point1String = string.Format("POINT({0} {1})", (-78.806689).ToString(), 43.098961.ToString());
             var geo1 = DbGeography.FromText(point1String);
 
@@ -33,20 +36,7 @@ namespace Bware.Data.Migrations
 
       
             context.SaveChanges();
-
-
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+             *****/
         }
     }
 }

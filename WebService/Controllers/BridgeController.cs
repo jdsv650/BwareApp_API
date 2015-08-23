@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+//using System.Web.Mvc;
 
 namespace WebService.Controllers
 {
@@ -58,10 +59,10 @@ namespace WebService.Controllers
 
 
         [HttpPost]
-        public bool UpvoteBridge(int id, string userName)
+        public void UpvoteBridge(int id, [FromBody] string userName)
         {
             var results = _adapter.increaseVote(id, userName);
-            return results;
+            return; //Json(results);
         }
 
         // PUT: api/Bridge/Adapters

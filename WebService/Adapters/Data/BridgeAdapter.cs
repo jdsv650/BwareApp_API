@@ -111,11 +111,11 @@ namespace WebService.Adapters.Data
             return bridge;
         }
 
-        public bool increaseVote(int bridgeId, string userName)
+        public bool increaseVote(int id, string userName)
         {
             var theBridge = new Bridge();
             var db = new BwareContext();
-            theBridge = db.Bridges.Where(b => b.BridgeId == bridgeId).FirstOrDefault();
+            theBridge = db.Bridges.Where(b => b.BridgeId == id).FirstOrDefault();
 
             if (theBridge == null) return false;
 
@@ -152,7 +152,15 @@ namespace WebService.Adapters.Data
             }
 
             theBridge.NumberOfVotes = theBridge.NumberOfVotes++;
-            return db.SaveChanges() == 1;
+
+            try
+            {
+                return db.SaveChanges() == 1;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
     }
