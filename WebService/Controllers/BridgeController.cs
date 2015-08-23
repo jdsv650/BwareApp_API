@@ -27,12 +27,6 @@ namespace WebService.Controllers
             return result;
         }
 
-        // GET: api/Bridge/5
-      //  public string Get(int id)     
-     //   {
-      //      return "value";
-      //  }
-
         [HttpGet]
       //  [System.Web.Http.Route("Bridge/GetByMiles")]
         public IEnumerable<Bridge> GetByMiles(double lat, double lon, int miles)
@@ -62,15 +56,15 @@ namespace WebService.Controllers
             _adapter.saveBridge(bridge);
         }
 
-        // POST: api/Bridge
+
         [HttpPost]
-        [AllowAnonymous]
-        public void Add(Bridge bridge)
+        public bool UpvoteBridge(int id, string userName)
         {
-            _adapter.saveBridge(bridge);
+            var results = _adapter.increaseVote(id, userName);
+            return results;
         }
 
-        // PUT: api/Bridge/5Adapters
+        // PUT: api/Bridge/Adapters
         public void Put(int id, [FromBody]string value)
         {
         }

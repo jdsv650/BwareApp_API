@@ -51,6 +51,8 @@ namespace WebService.Adapters.Data
             return bridge;
         }
 
+
+
         public bool removeBridgeByLocation(double lat, double lon)
         {
             var bridge = new Bridge();
@@ -99,6 +101,58 @@ namespace WebService.Adapters.Data
             {
                 return false;
             }
+        }
+
+        private Bridge getBridgeById(int id)
+        {
+            var bridge = new Bridge();
+            var db = new BwareContext();
+            bridge = db.Bridges.Where(b => b.BridgeId == id).FirstOrDefault();
+            return bridge;
+        }
+
+        public bool increaseVote(int bridgeId, string userName)
+        {
+            var theBridge = new Bridge();
+            var db = new BwareContext();
+            theBridge = db.Bridges.Where(b => b.BridgeId == bridgeId).FirstOrDefault();
+
+            if (theBridge == null) return false;
+
+            // Creator can't upvote a bridge
+            if (theBridge.UserCreated == userName) return false;  
+        
+            // User can only upvote once
+            if ((theBridge.User1Verified != null && theBridge.User1Verified == userName) ||
+                (theBridge.User2Verified != null && theBridge.User2Verified == userName) ||
+                (theBridge.User3Verified != null && theBridge.User3Verified == userName))
+            {
+                return false; 
+            }
+
+            // Can only upvote 3 times
+            if (theBridge.NumberOfVotes >= 3)
+            {
+                theBridge.NumberOfVotes = 3;
+                return false;
+            }
+
+            // if upvote slot free grab it
+            if (theBridge.User1Verified == null || theBridge.User1Verified == "")
+            {
+                theBridge.User1Verified = userName;
+            }
+            else if (theBridge.User2Verified == null || theBridge.User2Verified == "")
+            {
+                theBridge.User2Verified = userName;
+            }
+            else if (theBridge.User3Verified == null || theBridge.User3Verified == "")
+            {
+                theBridge.User3Verified = userName;
+            }
+
+            theBridge.NumberOfVotes = theBridge.NumberOfVotes++;
+            return db.SaveChanges() == 1;
         }
 
     }
