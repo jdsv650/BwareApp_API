@@ -111,31 +111,54 @@ namespace WebService.Adapters.Data
             return bridge;
         }
 
-        public bool increaseVote(int id, string userName)
+        public Models.ApiResult increaseVote(int bridgeId, string userName)
         {
             var theBridge = new Bridge();
             var db = new BwareContext();
-            theBridge = db.Bridges.Where(b => b.BridgeId == id).FirstOrDefault();
+            var result = new Models.ApiResult();
+            result.data = null;
 
-            if (theBridge == null) return false;
+            if (userName == "" || userName == null)
+            {
+                result.isSuccess = false;
+                result.message = "Username is null or empty string";
+                return result;
+            }
+
+            theBridge = db.Bridges.Where(b => b.BridgeId == bridgeId).FirstOrDefault();
+            if (theBridge == null)
+            { 
+                result.isSuccess = false;
+                result.message = "Bridge not found";
+                return result;
+            }
 
             // Creator can't upvote a bridge
-            if (theBridge.UserCreated == userName) return false;  
+            if (theBridge.UserCreated == userName) 
+             { 
+                result.isSuccess = false;
+                result.message = "Error: User Created Bridge";
+                return result;
+            }
         
             // User can only upvote once
             if ((theBridge.User1Verified != null && theBridge.User1Verified == userName) ||
                 (theBridge.User2Verified != null && theBridge.User2Verified == userName) ||
                 (theBridge.User3Verified != null && theBridge.User3Verified == userName))
-            {
-                return false; 
-            }
-
+             { 
+                result.isSuccess = false;
+                result.message = "Error: User can only upvote once";
+                return result;
+             }
+        
             // Can only upvote 3 times
             if (theBridge.NumberOfVotes >= 3)
-            {
+             { 
                 theBridge.NumberOfVotes = 3;
-                return false;
-            }
+                result.isSuccess = false;
+                result.message = "Error: Upvote slots full";
+                return result;
+             }
 
             // if upvote slot free grab it
             if (theBridge.User1Verified == null || theBridge.User1Verified == "")
@@ -151,15 +174,28 @@ namespace WebService.Adapters.Data
                 theBridge.User3Verified = userName;
             }
 
-            theBridge.NumberOfVotes = theBridge.NumberOfVotes++;
+            theBridge.User1Verified = "REMOVEME";
+            theBridge.NumberOfVotes = theBridge.NumberOfVotes + 1;
 
             try
             {
-                return db.SaveChanges() == 1;
+                if (db.SaveChanges() == 1)
+                {
+                    result.isSuccess = true;
+                    result.message = "Upvote Succcess";
+                }
+                else
+                {
+                    result.isSuccess = false;
+                    result.message = "Error Saving Upvote";
+                }
+                return result;
             }
             catch
             {
-                return false;
+                result.isSuccess = false;
+                result.message = "Error Saving Upvote";
+                return result;
             }
         }
 

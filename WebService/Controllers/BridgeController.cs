@@ -59,10 +59,10 @@ namespace WebService.Controllers
 
 
         [HttpPost]
-        public void UpvoteBridge(int id, [FromBody] string userName)
+        public Models.ApiResult UpvoteBridge([FromUri] int bridgeId, [FromBody] string userName)
         {
-            var results = _adapter.increaseVote(id, userName);
-            return; //Json(results);
+            var results = _adapter.increaseVote(bridgeId, userName);
+            return results;
         }
 
         // PUT: api/Bridge/Adapters

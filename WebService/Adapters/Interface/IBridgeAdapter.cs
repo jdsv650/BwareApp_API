@@ -14,7 +14,7 @@ namespace WebService.Adapters.Interface
         Bridge getBridgeByLocation(double lat, double lon);
         bool removeBridgeByLocation(double lat, double lon);
         bool saveBridge(Bridge bridge);
-        bool increaseVote(int bridgeId, String userName);
+        Models.ApiResult increaseVote(int bridgeId, String userName);
       
     }
 
