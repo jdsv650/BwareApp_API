@@ -174,7 +174,6 @@ namespace WebService.Adapters.Data
                 theBridge.User3Verified = userName;
             }
 
-            theBridge.User1Verified = "REMOVEME";
             theBridge.NumberOfVotes = theBridge.NumberOfVotes + 1;
 
             try
@@ -182,7 +181,7 @@ namespace WebService.Adapters.Data
                 if (db.SaveChanges() == 1)
                 {
                     result.isSuccess = true;
-                    result.message = "Upvote Succcess";
+                    result.message = "Upvote Succcessfully Recorded";
                 }
                 else
                 {
