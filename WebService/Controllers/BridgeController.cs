@@ -43,6 +43,13 @@ namespace WebService.Controllers
             return result;
         }
 
+        [HttpGet]
+        public Models.ApiResult GetByInfo(string country, string state, string county, string town="")
+        {
+            var result = _adapter.getByInfo(country, state, county, town);
+            return result;
+        }
+
         [HttpDelete]
         public bool RemoveByLocation(double lat, double lon)
         {

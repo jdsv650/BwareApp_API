@@ -51,7 +51,55 @@ namespace WebService.Adapters.Data
             return bridge;
         }
 
+        public Models.ApiResult getByInfo(string country, string state, string county, string town = "")
+        {
+            var bridges = new List<Bridge>();
+            var db = new BwareContext();
+            var result = new Models.ApiResult();
+            result.data = null;
 
+            if (country == null || country == "")
+            {
+                result.isSuccess = false;
+                result.message = "Country field must contain a value";
+                return result;
+            }
+
+            if (state == null || state == "")
+            {
+                result.isSuccess = false;
+                result.message = "State field must contain a value";
+                return result;
+            }
+
+            if (county == null || county == "")
+            {
+                result.isSuccess = false;
+                result.message = "County field must contain a value";
+                return result;
+            }
+
+         ///   if (town == "")
+          //  {
+               bridges = db.Bridges.Where(b => b.Country == country && b.State == state && b.County == county).ToList();
+         //   }
+         //   else
+          //  {
+          //      bridges = db.Bridges.Where(b => b.Country == country && b.State == state && b.County == county && b.Township == town).ToList();
+          //  }
+            if (bridges == null)
+            {
+                result.isSuccess = false;
+                result.message = "No bridges found for given area";
+                return result;
+            }
+
+            result.isSuccess = true;
+            result.message = "Success";
+            result.multipleData = bridges;
+
+            return result;
+        }
 
         public bool removeBridgeByLocation(double lat, double lon)
         {
@@ -197,6 +245,7 @@ namespace WebService.Adapters.Data
                 return result;
             }
         }
+
 
     }
 

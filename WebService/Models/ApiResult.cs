@@ -17,5 +17,9 @@ namespace WebService.Models
 
         [DataMember]
         public Bware.Data.Model.Bridge data { get; set; }
+
+        // please get rid of me
+        [DataMember]
+        public IEnumerable<Bware.Data.Model.Bridge> multipleData { get; set; }
     }
 }
