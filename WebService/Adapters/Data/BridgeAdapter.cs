@@ -51,7 +51,7 @@ namespace WebService.Adapters.Data
             return bridge;
         }
 
-        public Models.ApiResult getByInfo(string country, string state, string county, string town = "")
+        public Models.ApiResult getByInfo(string country, string state, string county, string town)
         {
             var bridges = new List<Bridge>();
             var db = new BwareContext();
@@ -79,14 +79,15 @@ namespace WebService.Adapters.Data
                 return result;
             }
 
-         ///   if (town == "")
-          //  {
-               bridges = db.Bridges.Where(b => b.Country == country && b.State == state && b.County == county).ToList();
-         //   }
-         //   else
-          //  {
-          //      bridges = db.Bridges.Where(b => b.Country == country && b.State == state && b.County == county && b.Township == town).ToList();
-          //  }
+            if (town == null || town == "")
+            {
+                bridges = db.Bridges.Where(b => b.Country == country && b.State == state && b.County == county).ToList();
+            }
+            else // town info passed in so match that too
+            {
+                bridges = db.Bridges.Where(b => b.Country == country && b.State == state && b.County == county && b.Township.Contains(town)).ToList();
+            }
+
             if (bridges == null)
             {
                 result.isSuccess = false;
