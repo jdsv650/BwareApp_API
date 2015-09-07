@@ -67,6 +67,12 @@ namespace Bware.Data.Model
         [DataMember]
         public String User3Verified { get; set; }
         [DataMember]
+        public Boolean? User1Reason { get; set; }
+        [DataMember]
+        public Boolean? User2Reason { get; set; }
+        [DataMember]
+        public Boolean? User3Reason { get; set; }
+        [DataMember]
         public bool isLocked { get; set; }
         
 

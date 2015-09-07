@@ -72,6 +72,16 @@ namespace WebService.Controllers
             return results;
         }
 
+
+        [HttpPost]
+        public Models.ApiResult DownVoteBridge([FromUri] int bridgeId, [FromUri] string userName)
+        {
+            var results = _adapter.decreaseVote(bridgeId, userName);
+            return results;
+        }
+
+
+
         // PUT: api/Bridge/Adapters
         public void Put(int id, [FromBody]string value)
         {

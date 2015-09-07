@@ -82,6 +82,10 @@
     <Compile Include="Migrations\201508202029360_Update_Bridge_IncludeUserVerifications_ExcludeStateID.Designer.cs">
       <DependentUpon>201508202029360_Update_Bridge_IncludeUserVerifications_ExcludeStateID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509070028558_Add_UserXReason_ToBridge.cs" />
+    <Compile Include="Migrations\201509070028558_Add_UserXReason_ToBridge.Designer.cs">
+      <DependentUpon>201509070028558_Add_UserXReason_ToBridge.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -113,6 +117,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508202029360_Update_Bridge_IncludeUserVerifications_ExcludeStateID.resx">
       <DependentUpon>201508202029360_Update_Bridge_IncludeUserVerifications_ExcludeStateID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509070028558_Add_UserXReason_ToBridge.resx">
+      <DependentUpon>201509070028558_Add_UserXReason_ToBridge.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

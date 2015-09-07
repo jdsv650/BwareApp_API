@@ -248,6 +248,95 @@ namespace WebService.Adapters.Data
         }
 
 
+        public Models.ApiResult decreaseVote(int bridgeId, string userName)
+        {
+            var theBridge = new Bridge();
+            var db = new BwareContext();
+            var result = new Models.ApiResult();
+            result.data = null;
+
+            if (userName == "" || userName == null)
+            {
+                result.isSuccess = false;
+                result.message = "Username is null or empty string";
+                return result;
+            }
+
+            theBridge = db.Bridges.Where(b => b.BridgeId == bridgeId).FirstOrDefault();
+            if (theBridge == null)
+            {
+                result.isSuccess = false;
+                result.message = "Bridge not found";
+                return result;
+            }
+
+            // Creator can downvote a bridge if he made a mistake
+            /***
+            if (theBridge.UserCreated == userName)
+            {
+                result.isSuccess = false;
+                result.message = "Error: User Created Bridge";
+                return result;
+            }
+             ***/
+
+            // User can only down vote once
+            if ((theBridge.User1Verified != null && theBridge.User1Verified == userName) ||
+                (theBridge.User2Verified != null && theBridge.User2Verified == userName) ||
+                (theBridge.User3Verified != null && theBridge.User3Verified == userName))
+            {
+                result.isSuccess = false;
+                result.message = "Error: User can only down vote once";
+                return result;
+            }
+
+            // Can only down vote max of 3 times
+            if (theBridge.NumberOfVotes >= 3)
+            {
+                theBridge.NumberOfVotes = 3;
+                result.isSuccess = false;
+                result.message = "Error: Down vote slots full";
+                return result;
+            }
+
+            // if down vote slot free grab it
+            if (theBridge.User1Verified == null || theBridge.User1Verified == "")
+            {
+                theBridge.User1Verified = userName;
+            }
+            else if (theBridge.User2Verified == null || theBridge.User2Verified == "")
+            {
+                theBridge.User2Verified = userName;
+            }
+            else if (theBridge.User3Verified == null || theBridge.User3Verified == "")
+            {
+                theBridge.User3Verified = userName;
+            }
+
+            theBridge.NumberOfVotes = theBridge.NumberOfVotes + 1;
+
+            try
+            {
+                if (db.SaveChanges() == 1)
+                {
+                    result.isSuccess = true;
+                    result.message = "Down Vote Succcessfully Recorded";
+                }
+                else
+                {
+                    result.isSuccess = false;
+                    result.message = "Error Saving Down Vote";
+                }
+                return result;
+            }
+            catch
+            {
+                result.isSuccess = false;
+                result.message = "Error Saving Down Vote";
+                return result;
+            }
+
+        }
     }
 
 }
