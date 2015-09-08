@@ -59,9 +59,10 @@ namespace WebService.Controllers
 
         // POST: api/Bridge
         [HttpPost]
-        public void Create(Bridge bridge)
+        public Models.ApiResult Create(Bridge bridge)
         {
-            _adapter.saveBridge(bridge);
+            var result = _adapter.saveBridge(bridge);
+            return result;
         }
 
 

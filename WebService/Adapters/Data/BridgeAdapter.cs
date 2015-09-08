@@ -11,6 +11,8 @@ namespace WebService.Adapters.Data
 {
     public class BridgeAdapter : Adapters.Interface.IBridgeAdapter
     {
+        const int numHoursBetweenCreate = 24;  // how often should a user be able to create a new bridge? once a week? roles? trust?
+
         public IEnumerable<Bridge> getAllBridges()
         {
             var bridges = new List<Bridge>();
@@ -124,31 +126,98 @@ namespace WebService.Adapters.Data
             }
         }
 
-        public bool saveBridge(Bridge bridge)
+        public Models.ApiResult saveBridge(Bridge bridge)
         {
             var db = new BwareContext();
+            var result = new Models.ApiResult();
+            result.isSuccess = false;
+            result.data = null;
+            result.multipleData = null;
 
-            if (bridge == null) return false;
+            if (bridge == null)
+            {
+                result.isSuccess = false;
+                result.message = "Bridge data is null";
+                return result;
+            }
+
+            if (bridge.UserCreated == null)
+            {
+                result.isSuccess = false;
+                result.message = "User created can not be null";
+                return result;
+            }
+  /**
+            if (1 == 2) // last time user created was less than numHoursBetween Create
+            {
+                result.isSuccess = false;
+                result.message = "User can only create a bridge every " + numHoursBetweenCreate + "hours";
+                return result;
+            }
+   * 
+   * */
+
+            bridge.NumberOfVotes = 0;    // new bridge
+            bridge.isLocked = false;
+
+            if (bridge.Latitude.GetType() != typeof(Double) || bridge.Longitude.GetType() != typeof(Double) )
+            {
+                result.isSuccess = false;
+                result.message = "Latitude and Longitude must be included and of correct data type";
+                return result;
+            }
+
+            // could just make it now 
+            if (bridge.DateCreated == null)
+            {
+                result.isSuccess = false;
+                result.message = "Date Created must be included";
+                return result;
+            }
+
+            // could just make it now
+            if (bridge.DateModified == null)
+            {
+                result.isSuccess = false;
+                result.message = "Date Modified must be included";
+                return result;
+            }
+
+            // check lat/lon in range
+            if (bridge.Latitude > 90 || bridge.Latitude < -90 || bridge.Longitude > 180 || bridge.Longitude < -180)
+            {
+                result.isSuccess = false;
+                result.message = "Latitude must be between -90 and 90; Longitude must be between -180 and 180";
+                return result;
+            }
 
             try
             {
-                // check lat/lon in range
-                if (bridge.Latitude > 90 || bridge.Latitude < -90 || bridge.Longitude > 180 || bridge.Longitude < -180)
-                {
-                    return false;
-                }
-
                 // set DbGeography
                 var sourcePoint = string.Format("POINT({0} {1})", bridge.Longitude.ToString().Replace(',', '.'), bridge.Latitude.ToString().Replace(',', '.'));
                 var bridgeLocation = DbGeography.PointFromText(sourcePoint, 4326);
                 bridge.BridgeLocation = bridgeLocation;
 
                 db.Bridges.Add(bridge);
-                return 1 == db.SaveChanges();
+                var numReturned = db.SaveChanges();
+                if (numReturned == 1)
+                {
+                    result.isSuccess = true;
+                    result.message = "Bridge saved successfully";
+                    return result;
+                }
+                else
+                {
+                    result.isSuccess = false;
+                    result.message = "Error saving bridge record to database";
+                    return result;
+                }
             }
             catch
             {
-                return false;
+                result.isSuccess = false;
+                result.message = "Error saving bridge record to database";
+                return result;
             }
         }
 
@@ -286,7 +355,7 @@ namespace WebService.Adapters.Data
                 (theBridge.User3Verified != null && theBridge.User3Verified == userName))
             {
                 result.isSuccess = false;
-                result.message = "Error: User can only down vote once";
+                result.message = "Error: User can only down vote a bridge once";
                 return result;
             }
 
