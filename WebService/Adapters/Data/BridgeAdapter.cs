@@ -149,65 +149,6 @@ namespace WebService.Adapters.Data
                 return result;
             }
 
-            try
-            {
-                // 5 minutes for testing!!!!!!
-                var theBridges = new List<Bridge>();
-                theBridges = null;
-                var isAlreadyCreated = false;
-
-                theBridges = db.Bridges.Where(b => b.UserCreated == bridge.UserCreated).ToList();
-                
-                foreach (var b in theBridges)
-                {
-                    if (b.DateCreated.AddMinutes(5) > DateTime.Now)
-                    {
-                        isAlreadyCreated = true;
-                        break;
-                    }
-                }
-
-                var now = DateTime.UtcNow;
-             
-                //isAlreadyCreated = db.Bridges.AsEnumerable().Where(b => b.UserCreated == bridge.UserCreated && b.DateCreated.AddMinutes(5).CompareTo(now) < 0 ).ToList().Any();  //EntityFunctions.DiffMinutes(now, b.DateCreated) > 5)
-
-              //  theBridges = db.Bridges.Where(b => b.UserCreated == bridge.UserCreated && EntityFunctions.DiffMinutes(now, b.DateCreated) < 5).ToList();  
-
-                if (isAlreadyCreated)
-                {
-                    result.isSuccess = false;
-                    result.message = "User must wait specified time between creating bridges";
-                    return result;
-                }
-            }
-            catch
-            {
-                result.isSuccess = false;
-                result.message = "Error determining when user last created bridge. Please try again";
-                return result;
-            }
-                
-                
-                /**
-            if (1 == 2) // last time user created was less than numHoursBetween Create
-            {
-                result.isSuccess = false;
-                result.message = "User can only create a bridge every " + numHoursBetweenCreate + "hours";
-                return result;
-            }
-   * 
-   * */
-
-            bridge.NumberOfVotes = 0;    // new bridge
-            bridge.isLocked = false;
-
-            if (bridge.Latitude.GetType() != typeof(Double) || bridge.Longitude.GetType() != typeof(Double) )
-            {
-                result.isSuccess = false;
-                result.message = "Latitude and Longitude must be included and of correct data type";
-                return result;
-            }
-
             // could just make it now 
             if (bridge.DateCreated == null)
             {
@@ -231,6 +172,42 @@ namespace WebService.Adapters.Data
                 result.message = "Latitude must be between -90 and 90; Longitude must be between -180 and 180";
                 return result;
             }
+
+            if (bridge.Latitude.GetType() != typeof(Double) || bridge.Longitude.GetType() != typeof(Double))
+            {
+                result.isSuccess = false;
+                result.message = "Latitude and Longitude must be included and of correct data type";
+                return result;
+            }
+
+            try
+            {
+                // 5 minutes for testing!!!!!!
+                var theBridges = new List<Bridge>();
+                theBridges = null;
+                var isAlreadyCreated = false;
+
+                var fiveMinutesAgo = DateTime.UtcNow.AddMinutes(-5);
+                var oneWeekAgo = DateTime.UtcNow.AddDays(-7);
+
+                //************************** change to oneWeekAgo before app gets released *************************************************
+                isAlreadyCreated = db.Bridges.Where(b => b.UserCreated == bridge.UserCreated && b.DateCreated > fiveMinutesAgo).ToList().Any(); 
+                if (isAlreadyCreated)
+                {
+                    result.isSuccess = false;
+                    result.message = "User must wait specified time between creating bridges";
+                    return result;
+                }
+            }
+            catch
+            {
+                result.isSuccess = false;
+                result.message = "Error determining when user last created bridge. Please try again";
+                return result;
+            }
+                
+            bridge.NumberOfVotes = 0;    // new bridge
+            bridge.isLocked = false;
 
             try
             {
