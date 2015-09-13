@@ -6,12 +6,13 @@ using Bware.Data.Model;
 using Bware.Data;
 using System.Web.Http;
 using System.Data.Entity.Spatial;
+using System.Data.Entity.Core.Objects;
 
 namespace WebService.Adapters.Data
 {
     public class BridgeAdapter : Adapters.Interface.IBridgeAdapter
     {
-        const int numHoursBetweenCreate = 24;  // how often should a user be able to create a new bridge? once a week? roles? trust?
+        const int numHoursBetweenCreate = 1;  // how often should a user be able to create a new bridge? once a week? roles? trust?
 
         public IEnumerable<Bridge> getAllBridges()
         {
@@ -147,7 +148,47 @@ namespace WebService.Adapters.Data
                 result.message = "User created can not be null";
                 return result;
             }
-  /**
+
+            try
+            {
+                // 5 minutes for testing!!!!!!
+                var theBridges = new List<Bridge>();
+                theBridges = null;
+                var isAlreadyCreated = false;
+
+                theBridges = db.Bridges.Where(b => b.UserCreated == bridge.UserCreated).ToList();
+                
+                foreach (var b in theBridges)
+                {
+                    if (b.DateCreated.AddMinutes(5) > DateTime.Now)
+                    {
+                        isAlreadyCreated = true;
+                        break;
+                    }
+                }
+
+                var now = DateTime.UtcNow;
+             
+                //isAlreadyCreated = db.Bridges.AsEnumerable().Where(b => b.UserCreated == bridge.UserCreated && b.DateCreated.AddMinutes(5).CompareTo(now) < 0 ).ToList().Any();  //EntityFunctions.DiffMinutes(now, b.DateCreated) > 5)
+
+              //  theBridges = db.Bridges.Where(b => b.UserCreated == bridge.UserCreated && EntityFunctions.DiffMinutes(now, b.DateCreated) < 5).ToList();  
+
+                if (isAlreadyCreated)
+                {
+                    result.isSuccess = false;
+                    result.message = "User must wait specified time between creating bridges";
+                    return result;
+                }
+            }
+            catch
+            {
+                result.isSuccess = false;
+                result.message = "Error determining when user last created bridge. Please try again";
+                return result;
+            }
+                
+                
+                /**
             if (1 == 2) // last time user created was less than numHoursBetween Create
             {
                 result.isSuccess = false;
@@ -197,6 +238,10 @@ namespace WebService.Adapters.Data
                 var sourcePoint = string.Format("POINT({0} {1})", bridge.Longitude.ToString().Replace(',', '.'), bridge.Latitude.ToString().Replace(',', '.'));
                 var bridgeLocation = DbGeography.PointFromText(sourcePoint, 4326);
                 bridge.BridgeLocation = bridgeLocation;
+
+                // Store date created/modified as UTC
+                bridge.DateCreated = bridge.DateCreated.ToUniversalTime();
+                bridge.DateModified = bridge.DateModified.ToUniversalTime();
 
                 db.Bridges.Add(bridge);
                 var numReturned = db.SaveChanges();
