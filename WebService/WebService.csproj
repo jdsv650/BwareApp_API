@@ -265,6 +265,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="Areas\HelpPage\Views\Web - Copy.config" />
+    <None Include="Properties\PublishProfiles\Arvixe.pubxml" />
     <None Include="Properties\PublishProfiles\BwareAPI.pubxml" />
     <None Include="Properties\PublishProfiles\myopenroad.info - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\myopenroad.info - Web Deploy.pubxml">
