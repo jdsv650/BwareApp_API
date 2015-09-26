@@ -74,7 +74,8 @@ namespace Bware.Data.Model
         public Boolean? User3Reason { get; set; }
         [DataMember]
         public bool isLocked { get; set; }
-        
+        [DataMember]
+        public bool isActive { get; set; }
 
     }
 }

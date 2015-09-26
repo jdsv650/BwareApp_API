@@ -86,6 +86,10 @@
     <Compile Include="Migrations\201509070028558_Add_UserXReason_ToBridge.Designer.cs">
       <DependentUpon>201509070028558_Add_UserXReason_ToBridge.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509252340457_Add_isActive.cs" />
+    <Compile Include="Migrations\201509252340457_Add_isActive.Designer.cs">
+      <DependentUpon>201509252340457_Add_isActive.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -120,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509070028558_Add_UserXReason_ToBridge.resx">
       <DependentUpon>201509070028558_Add_UserXReason_ToBridge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509252340457_Add_isActive.resx">
+      <DependentUpon>201509252340457_Add_isActive.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
