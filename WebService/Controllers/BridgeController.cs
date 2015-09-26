@@ -20,13 +20,14 @@ namespace WebService.Controllers
         }
 
         // GET: api/Bridge
-       
+       /* don't allow get all
         [HttpGet]
         public IEnumerable<Bridge> GetAll()
         {
             var result = _adapter.getAllBridges();
             return result;
         }
+        */
 
         [HttpGet]
       //  [System.Web.Http.Route("Bridge/GetByMiles")]

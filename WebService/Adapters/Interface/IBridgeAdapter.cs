@@ -9,7 +9,7 @@ namespace WebService.Adapters.Interface
 {
     interface IBridgeAdapter
     {
-        IEnumerable<Bridge> getAllBridges();
+        // IEnumerable<Bridge> getAllBridges();
         IEnumerable<Bridge> getBridgesWithinMiles(double lat, double lon, int miles);
         Bridge getBridgeByLocation(double lat, double lon);
         Models.ApiResult getByInfo(string country, string state, string county, string town = "");

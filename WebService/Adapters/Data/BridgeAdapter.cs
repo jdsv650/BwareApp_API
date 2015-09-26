@@ -14,6 +14,7 @@ namespace WebService.Adapters.Data
     {
         const int numHoursBetweenCreate = 1;  // how often should a user be able to create a new bridge? once a week? roles? trust?
 
+        /*** Don't allow get all
         public IEnumerable<Bridge> getAllBridges()
         {
             var bridges = new List<Bridge>();
@@ -22,7 +23,7 @@ namespace WebService.Adapters.Data
             bridges = db.Bridges.ToList();
             return bridges;
         }
-
+        ***/
 
         public IEnumerable<Bridge> getBridgesWithinMiles(double lat, double lon, int miles)
         {
@@ -36,8 +37,8 @@ namespace WebService.Adapters.Data
 
             var sourcePoint = string.Format("POINT({0} {1})", lon.ToString().Replace(',','.'), lat.ToString().Replace(',','.'));
             var currentLocation = DbGeography.PointFromText(sourcePoint, 4326);
-            //1609.34 meters per miles - req meters
-            bridges = db.Bridges.Where(b => b.BridgeLocation.Distance(currentLocation) < miles * 1609.34).ToList(); 
+            //1609.34 meters per miles - req meters  -- Add isActive check
+            bridges = db.Bridges.Where(b => b.BridgeLocation.Distance(currentLocation) < miles * 1609.34 && b.isActive == true).ToList(); 
 
             return bridges;
         }
@@ -48,8 +49,8 @@ namespace WebService.Adapters.Data
             var db = new BwareContext();
 
            // if (lat > 90 || lat < -90 || lon > 180 || lon < -180)   {  }
-            // may need to give a bit here instead of = 
-            bridge = db.Bridges.Where(b => b.Latitude <= lat + 0.0001 && b.Latitude >= lat - 0.0001 && b.Longitude <= lon + 0.0001 && b.Longitude >= lon - 0.0001).FirstOrDefault();
+            // may need to give a bit here instead of =   -- Add isActive check
+            bridge = db.Bridges.Where(b => b.Latitude <= lat + 0.0001 && b.Latitude >= lat - 0.0001 && b.Longitude <= lon + 0.0001 && b.Longitude >= lon - 0.0001 && b.isActive == true).FirstOrDefault();
 
             return bridge;
         }
@@ -83,12 +84,12 @@ namespace WebService.Adapters.Data
             }
 
             if (town == null || town == "")
-            {
-                bridges = db.Bridges.Where(b => b.Country == country && b.State == state && b.County == county).ToList();
+            {   // -- Add isActive check
+                bridges = db.Bridges.Where(b => b.Country == country && b.State == state && b.County == county && b.isActive == true).ToList();
             }
             else // town info passed in so match that too
-            {
-                bridges = db.Bridges.Where(b => b.Country == country && b.State == state && b.County == county && b.Township.Contains(town)).ToList();
+            {   // -- Add isActive check
+                bridges = db.Bridges.Where(b => b.Country == country && b.State == state && b.County == county && b.Township.Contains(town) && b.isActive == true).ToList();
             }
 
             if (bridges == null)
@@ -116,7 +117,10 @@ namespace WebService.Adapters.Data
 
                 if (bridge != null)
                 {
-                    db.Bridges.Remove(bridge);
+                    // Delete no longer removes bridge from db
+                    // Mark isActive as false for soft delete
+                    bridge.isActive = false;
+                    // db.Bridges.Remove(bridge);
                     return 1 == db.SaveChanges();
                 }
                 return false;
@@ -220,6 +224,9 @@ namespace WebService.Adapters.Data
                 bridge.DateCreated = bridge.DateCreated.ToUniversalTime();
                 bridge.DateModified = bridge.DateModified.ToUniversalTime();
 
+                // Mark new bridge as isActive
+                bridge.isActive = true;
+
                 db.Bridges.Add(bridge);
                 var numReturned = db.SaveChanges();
                 if (numReturned == 1)
@@ -247,7 +254,7 @@ namespace WebService.Adapters.Data
         {
             var bridge = new Bridge();
             var db = new BwareContext();
-            bridge = db.Bridges.Where(b => b.BridgeId == id).FirstOrDefault();
+            bridge = db.Bridges.Where(b => b.BridgeId == id && b.isActive == true).FirstOrDefault();
             return bridge;
         }
 
@@ -265,7 +272,7 @@ namespace WebService.Adapters.Data
                 return result;
             }
 
-            theBridge = db.Bridges.Where(b => b.BridgeId == bridgeId).FirstOrDefault();
+            theBridge = db.Bridges.Where(b => b.BridgeId == bridgeId && b.isActive == true).FirstOrDefault();
             if (theBridge == null)
             { 
                 result.isSuccess = false;
@@ -353,7 +360,7 @@ namespace WebService.Adapters.Data
                 return result;
             }
 
-            theBridge = db.Bridges.Where(b => b.BridgeId == bridgeId).FirstOrDefault();
+            theBridge = db.Bridges.Where(b => b.BridgeId == bridgeId && b.isActive == true).FirstOrDefault();
             if (theBridge == null)
             {
                 result.isSuccess = false;
