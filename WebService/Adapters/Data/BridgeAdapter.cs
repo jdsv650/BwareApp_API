@@ -106,28 +106,80 @@ namespace WebService.Adapters.Data
             return result;
         }
 
-        public bool removeBridgeByLocation(double lat, double lon)
+        private bool allowEdit()
+        {
+            return true;
+        }
+
+        // if at least 2/3 are marked as edit don't allow remove (only edit)
+        private bool allowDelete(Bridge bridge)
+        {
+            if (bridge.User1Reason == true && bridge.User2Reason == true && bridge.User3Reason == true ||
+                bridge.User1Reason == true && bridge.User2Reason == true && bridge.User3Reason == false ||
+                bridge.User1Reason == true && bridge.User2Reason == false && bridge.User3Reason == true ||
+                bridge.User1Reason == false && bridge.User2Reason == true && bridge.User3Reason == true)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public Models.ApiResult removeBridgeByLocation(double lat, double lon)
         {
             var bridge = new Bridge();
             var db = new BwareContext();
+            var result = new Models.ApiResult();
+            result.isSuccess = false;
+            result.data = null;
+            result.multipleData = null;
 
             try
             {
                 bridge = getBridgeByLocation(lat, lon);
-
-                if (bridge != null)
+                if (bridge == null)
+                {  // couldn't find bridge
+                    result.message = "Bridge not found";
+                    return result;
+                }
+                else
                 {
+                    // Check to see if bridge can be deleted (marked isActive = false) first!!!!!!
+                    if (bridge.User1Reason == null || bridge.User2Reason == null || bridge.User3Reason == null)
+                    {
+                        result.message = "Bridge must have at least 3 down votes to be removed";
+                        return result;
+                    }
+                    // false == 0 == mark for delete -- true == 1 == mark for edit
+                    // if at least 2/3 are marked as edit don't allow remove (only edit)
+                    if (allowDelete(bridge) == false)
+                    {
+                        result.message = "Bridge must have at least 2 down votes of correct type to be removed";
+                        return result;
+                    }
+
+                    // Delete one per week???????
+
+
                     // Delete no longer removes bridge from db
                     // Mark isActive as false for soft delete
                     bridge.isActive = false;
                     // db.Bridges.Remove(bridge);
-                    return 1 == db.SaveChanges();
+                    var saveOk = 1 == db.SaveChanges();
+                    if (saveOk == true)
+                    {
+                        result.isSuccess = true;
+                        result.message = "Bridge marked as inactive";
+                    }
+
+                    result.message = "Error removing bridge";
+                    return result;
                 }
-                return false;
             }
             catch
             {
-                return false;
+                result.message = "Error removing bridge";
+                return result;
             }
         }
 

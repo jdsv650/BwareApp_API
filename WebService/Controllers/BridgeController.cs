@@ -52,7 +52,7 @@ namespace WebService.Controllers
         }
 
         [HttpDelete]
-        public bool RemoveByLocation(double lat, double lon)
+        public Models.ApiResult RemoveByLocation(double lat, double lon)
         {
             var result = _adapter.removeBridgeByLocation(lat, lon);
             return result;
