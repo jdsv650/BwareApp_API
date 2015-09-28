@@ -16,6 +16,8 @@ using Microsoft.Owin.Security.OAuth;
 using WebService.Models;
 using WebService.Providers;
 using WebService.Results;
+using System.Linq;
+
 
 namespace WebService.Controllers
 {
@@ -321,6 +323,42 @@ namespace WebService.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
+        public async Task<Models.ApiResult> Register(RegisterBindingModel model)
+        {
+            var result = new Models.ApiResult();
+            result.isSuccess = false;
+            result.data = null;
+            result.multipleData = null;
+
+            /** want registerResult.Errors below 
+            if (!ModelState.IsValid)
+            {
+                result.message = "Invalid user data";
+                return result;
+            }
+             ****/
+
+            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+
+            IdentityResult registerResult = await UserManager.CreateAsync(user, model.Password);
+
+            if (!registerResult.Succeeded)
+            {
+               // GetErrorResult(registerResult);
+                result.message = registerResult.Errors.FirstOrDefault();
+                return result;
+            }
+
+          //  return Ok();
+            result.isSuccess = true;
+            result.message = "User registered successfully";
+            return result;
+        }
+
+        /***** ORIGINAL ******************************************************************************
+        // POST api/Account/Register
+        [AllowAnonymous]
+        [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -339,6 +377,7 @@ namespace WebService.Controllers
 
             return Ok();
         }
+         ********************/
 
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]

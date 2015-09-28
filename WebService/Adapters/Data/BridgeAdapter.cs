@@ -398,7 +398,7 @@ namespace WebService.Adapters.Data
         }
 
 
-        public Models.ApiResult decreaseVote(int bridgeId, string userName)
+        public Models.ApiResult decreaseVote(int bridgeId, string userName, bool isEdit)
         {
             var theBridge = new Bridge();
             var db = new BwareContext();
@@ -453,14 +453,17 @@ namespace WebService.Adapters.Data
             if (theBridge.User1Verified == null || theBridge.User1Verified == "")
             {
                 theBridge.User1Verified = userName;
+                theBridge.User1Reason = isEdit;
             }
             else if (theBridge.User2Verified == null || theBridge.User2Verified == "")
             {
                 theBridge.User2Verified = userName;
+                theBridge.User2Reason = isEdit;
             }
             else if (theBridge.User3Verified == null || theBridge.User3Verified == "")
             {
                 theBridge.User3Verified = userName;
+                theBridge.User3Reason = isEdit;
             }
 
             theBridge.NumberOfVotes = theBridge.NumberOfVotes + 1;

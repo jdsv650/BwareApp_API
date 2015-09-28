@@ -76,9 +76,9 @@ namespace WebService.Controllers
 
 
         [HttpPost]
-        public Models.ApiResult DownVoteBridge([FromUri] int bridgeId, [FromUri] string userName)
+        public Models.ApiResult DownVoteBridge([FromUri] int bridgeId, [FromUri] string userName, [FromUri] bool isEdit)
         {
-            var results = _adapter.decreaseVote(bridgeId, userName);
+            var results = _adapter.decreaseVote(bridgeId, userName, isEdit);
             return results;
         }
 
