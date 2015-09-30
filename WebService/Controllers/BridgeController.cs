@@ -66,6 +66,12 @@ namespace WebService.Controllers
             return result;
         }
 
+        [HttpPost]
+        public Models.ApiResult Update(Bridge bridge)
+        {
+            var result = _adapter.updateBridge(bridge);
+            return result;
+        }
 
         [HttpPost]
         public Models.ApiResult UpvoteBridge([FromUri] int bridgeId, [FromUri] string userName)
@@ -80,13 +86,6 @@ namespace WebService.Controllers
         {
             var results = _adapter.decreaseVote(bridgeId, userName, isEdit);
             return results;
-        }
-
-
-
-        // PUT: api/Bridge/Adapters
-        public void Put(int id, [FromBody]string value)
-        {
         }
 
         // DELETE: api/Bridge/5

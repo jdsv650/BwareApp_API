@@ -14,17 +14,6 @@ namespace WebService.Adapters.Data
     {
         const int numHoursBetweenCreate = 1;  // how often should a user be able to create a new bridge? once a week? roles? trust?
 
-        /*** Don't allow get all
-        public IEnumerable<Bridge> getAllBridges()
-        {
-            var bridges = new List<Bridge>();
-            var db = new BwareContext();
-
-            bridges = db.Bridges.ToList();
-            return bridges;
-        }
-        ***/
-
         public IEnumerable<Bridge> getBridgesWithinMiles(double lat, double lon, int miles)
         {
             var bridges = new List<Bridge>();
@@ -302,6 +291,115 @@ namespace WebService.Adapters.Data
             }
         }
 
+
+        public Models.ApiResult updateBridge(Bridge bridge)
+        {
+            var db = new BwareContext();
+            var result = new Models.ApiResult();
+            result.isSuccess = false;
+            result.data = null;
+            result.multipleData = null;
+
+            if (bridge == null)
+            {
+                result.isSuccess = false;
+                result.message = "Bridge data is null";
+                return result;
+            }
+
+            if (bridge.DateModified == null)
+            {
+                result.isSuccess = false;
+                result.message = "Date Modified must be included";
+                return result;
+            }
+
+            if (bridge.UserModified == null)
+            {
+                result.isSuccess = false;
+                result.message = "User Modified must be included";
+                return result;
+            }
+
+            // check lat/lon in range
+            if (bridge.Latitude > 90 || bridge.Latitude < -90 || bridge.Longitude > 180 || bridge.Longitude < -180)
+            {
+                result.isSuccess = false;
+                result.message = "Latitude must be between -90 and 90; Longitude must be between -180 and 180";
+                return result;
+            }
+
+            if (bridge.Latitude.GetType() != typeof(Double) || bridge.Longitude.GetType() != typeof(Double))
+            {
+                result.isSuccess = false;
+                result.message = "Latitude and Longitude must be included and of correct data type";
+                return result;
+            }
+
+            try
+            {
+                var theBridge = db.Bridges.Where(b => b.Latitude <= bridge.Latitude + 0.0001 && b.Latitude >= bridge.Latitude - 0.0001 && b.Longitude <= bridge.Longitude + 0.0001 && b.Longitude >= bridge.Longitude - 0.0001 && b.isActive == true).FirstOrDefault();
+
+                if (theBridge == null)
+                {
+                    result.isSuccess = false;
+                    result.message = "Bridge not found";
+                    return result;
+                }
+
+                db.Bridges.Attach(theBridge);
+
+                // track who made last change and when 
+                theBridge.DateModified = bridge.DateModified.ToUniversalTime();
+                theBridge.UserModified = bridge.UserModified;
+
+                theBridge.NumberOfVotes = 0;    // reset user input fields
+                theBridge.isLocked = false;
+                theBridge.User1Reason = null;
+                theBridge.User1Verified = null;
+                theBridge.User2Reason = null;
+                theBridge.User2Verified = null;
+                theBridge.User3Reason = null;
+                theBridge.User3Verified = null;
+
+                theBridge.Country = bridge.Country;  // the location - restriction fields
+                theBridge.County = bridge.County;
+                theBridge.FeatureCarried = bridge.FeatureCarried;
+                theBridge.FeatureCrossed = bridge.FeatureCrossed;
+                theBridge.Height = bridge.Height;
+                theBridge.isRposted = bridge.isRposted;
+                theBridge.LocationDescription = bridge.LocationDescription;
+                theBridge.OtherPosting = bridge.OtherPosting;
+                theBridge.State = bridge.State;
+                theBridge.Township = bridge.Township;
+                theBridge.WeightCombination = bridge.WeightCombination;
+                theBridge.WeightDouble = bridge.WeightDouble;
+                theBridge.WeightStraight = bridge.WeightStraight;
+                theBridge.Zip = bridge.Zip;
+
+                var updateCount = db.SaveChanges();
+                if (updateCount == 1)
+                {
+                    result.isSuccess = true;
+                    result.message = "Bridge updated successfully";
+                    return result;
+                }
+                else
+                {
+                    result.isSuccess = false;
+                    result.message = "Error saving bridge record to database";
+                    return result;
+                }
+            }
+            catch
+            {
+                result.isSuccess = false;
+                result.message = "Error saving bridge record to database";
+                return result;
+            }
+
+        }
+
         private Bridge getBridgeById(int id)
         {
             var bridge = new Bridge();
@@ -490,6 +588,7 @@ namespace WebService.Adapters.Data
             }
 
         }
+
     }
 
 }

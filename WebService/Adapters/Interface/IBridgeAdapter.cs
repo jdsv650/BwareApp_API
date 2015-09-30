@@ -15,6 +15,7 @@ namespace WebService.Adapters.Interface
         Models.ApiResult getByInfo(string country, string state, string county, string town = "");
         Models.ApiResult removeBridgeByLocation(double lat, double lon);
         Models.ApiResult saveBridge(Bridge bridge);
+        Models.ApiResult updateBridge(Bridge bridge);
         Models.ApiResult increaseVote(int bridgeId, String userName);
         Models.ApiResult decreaseVote(int bridgeId, String userName, bool isEdit);
 
