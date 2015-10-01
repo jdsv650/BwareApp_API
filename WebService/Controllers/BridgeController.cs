@@ -51,7 +51,7 @@ namespace WebService.Controllers
             return result;
         }
 
-        [HttpDelete]
+        [HttpPost]
         public Models.ApiResult RemoveByLocation(double lat, double lon)
         {
             var result = _adapter.removeBridgeByLocation(lat, lon);
@@ -80,7 +80,6 @@ namespace WebService.Controllers
             return results;
         }
 
-
         [HttpPost]
         public Models.ApiResult DownVoteBridge([FromUri] int bridgeId, [FromUri] string userName, [FromUri] bool isEdit)
         {
@@ -88,9 +87,5 @@ namespace WebService.Controllers
             return results;
         }
 
-        // DELETE: api/Bridge/5
-        public void Delete(int id)
-        {
-        }
     }
 }

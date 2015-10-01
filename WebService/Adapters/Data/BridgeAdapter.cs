@@ -126,6 +126,8 @@ namespace WebService.Adapters.Data
             try
             {
                 bridge = getBridgeByLocation(lat, lon);
+                db.Bridges.Attach(bridge);
+
                 if (bridge == null)
                 {  // couldn't find bridge
                     result.message = "Bridge not found";
@@ -133,7 +135,7 @@ namespace WebService.Adapters.Data
                 }
                 else
                 {
-                    // Check to see if bridge can be deleted (marked isActive = false) first!!!!!!
+                    // Check to see if bridge can be deleted (marked isActive assigned to false) first!!!!!!
                     if (bridge.User1Reason == null || bridge.User2Reason == null || bridge.User3Reason == null)
                     {
                         result.message = "Bridge must have at least 3 down votes to be removed";
@@ -159,6 +161,7 @@ namespace WebService.Adapters.Data
                     {
                         result.isSuccess = true;
                         result.message = "Bridge marked as inactive";
+                        return result;
                     }
 
                     result.message = "Error removing bridge";
@@ -517,16 +520,6 @@ namespace WebService.Adapters.Data
                 result.message = "Bridge not found";
                 return result;
             }
-
-            // Creator can downvote a bridge if he made a mistake
-            /***
-            if (theBridge.UserCreated == userName)
-            {
-                result.isSuccess = false;
-                result.message = "Error: User Created Bridge";
-                return result;
-            }
-             ***/
 
             // User can only down vote once
             if ((theBridge.User1Verified != null && theBridge.User1Verified == userName) ||
