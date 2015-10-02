@@ -149,13 +149,11 @@ namespace WebService.Adapters.Data
                         return result;
                     }
 
-                    // Delete one per week???????
+                    // Delete only one per week???????
 
-
-                    // Delete no longer removes bridge from db
                     // Mark isActive as false for soft delete
                     bridge.isActive = false;
-                    // db.Bridges.Remove(bridge);
+
                     var saveOk = 1 == db.SaveChanges();
                     if (saveOk == true)
                     {
@@ -349,6 +347,15 @@ namespace WebService.Adapters.Data
                     result.message = "Bridge not found";
                     return result;
                 }
+
+                // Check to see if all 3 down vote slots filled before allowing edit
+                if (theBridge.User1Reason == null || theBridge.User2Reason == null || theBridge.User3Reason == null)
+                {
+                    result.message = "Bridge must have at least 3 down votes to be edited";
+                    return result;
+                }
+            
+                // Edit only one per week???????
 
                 db.Bridges.Attach(theBridge);
 
