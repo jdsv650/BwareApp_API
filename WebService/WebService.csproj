@@ -242,6 +242,8 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\app_icon.png" />
+    <Content Include="Images\Bware_grey1_100_100.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -266,6 +268,7 @@
     <Content Include="Areas\HelpPage\Views\Web - Copy.config" />
     <None Include="Properties\PublishProfiles\Arvixe.pubxml" />
     <None Include="Properties\PublishProfiles\BwareAPI.pubxml" />
+    <None Include="Properties\PublishProfiles\bwaremap.com - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\myopenroad.info - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\myopenroad.info - Web Deploy.pubxml">
       <SubType>Designer</SubType>

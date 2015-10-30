@@ -19,6 +19,8 @@ namespace WebService.Adapters.Interface
         Models.ApiResult increaseVote(int bridgeId, String userName);
         Models.ApiResult decreaseVote(int bridgeId, String userName, bool isEdit);
 
+
+        Models.ApiResult saveBridgeBatch(Bridge bridge);
     }
 
 }

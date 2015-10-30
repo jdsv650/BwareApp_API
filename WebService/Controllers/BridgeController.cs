@@ -60,9 +60,10 @@ namespace WebService.Controllers
 
         // POST: api/Bridge
         [HttpPost]
+        [AllowAnonymous] // FOr SEED
         public Models.ApiResult Create(Bridge bridge)
         {
-            var result = _adapter.saveBridge(bridge);
+            var result = _adapter.saveBridgeBatch(bridge);
             return result;
         }
 

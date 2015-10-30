@@ -43,6 +43,8 @@ namespace Bware.Data.Model
         [DataMember]
         public double? WeightStraight { get; set; }
         [DataMember]
+        public double? WeightStraight_TriAxle { get; set; }
+        [DataMember]
         public double? WeightCombination { get; set; }
         [DataMember]
         public double? WeightDouble { get; set; }

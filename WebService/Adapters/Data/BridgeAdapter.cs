@@ -166,7 +166,7 @@ namespace WebService.Adapters.Data
                     return result;
                 }
             }
-            catch
+            catch 
             {
                 result.message = "Error removing bridge";
                 return result;
@@ -252,6 +252,102 @@ namespace WebService.Adapters.Data
                 return result;
             }
                 
+            bridge.NumberOfVotes = 0;    // new bridge
+            bridge.isLocked = false;
+
+            try
+            {
+                // set DbGeography
+                var sourcePoint = string.Format("POINT({0} {1})", bridge.Longitude.ToString().Replace(',', '.'), bridge.Latitude.ToString().Replace(',', '.'));
+                var bridgeLocation = DbGeography.PointFromText(sourcePoint, 4326);
+                bridge.BridgeLocation = bridgeLocation;
+
+                // Store date created/modified as UTC
+                bridge.DateCreated = bridge.DateCreated.ToUniversalTime();
+                bridge.DateModified = bridge.DateModified.ToUniversalTime();
+
+                // Mark new bridge as isActive
+                bridge.isActive = true;
+
+                db.Bridges.Add(bridge);
+                var numReturned = db.SaveChanges();
+                if (numReturned == 1)
+                {
+                    result.isSuccess = true;
+                    result.message = "Bridge saved successfully";
+                    return result;
+                }
+                else
+                {
+                    result.isSuccess = false;
+                    result.message = "Error saving bridge record to database";
+                    return result;
+                }
+            }
+            catch
+            {
+                result.isSuccess = false;
+                result.message = "Error saving bridge record to database";
+                return result;
+            }
+        }
+
+
+
+        public Models.ApiResult saveBridgeBatch(Bridge bridge)
+        {
+            var db = new BwareContext();
+            var result = new Models.ApiResult();
+            result.isSuccess = false;
+            result.data = null;
+            result.multipleData = null;
+
+            if (bridge == null)
+            {
+                result.isSuccess = false;
+                result.message = "Bridge data is null";
+                return result;
+            }
+
+            if (bridge.UserCreated == null)
+            {
+                result.isSuccess = false;
+                result.message = "User created can not be null";
+                return result;
+            }
+
+            // could just make it now 
+            if (bridge.DateCreated == null)
+            {
+                result.isSuccess = false;
+                result.message = "Date Created must be included";
+                return result;
+            }
+
+            // could just make it now
+            if (bridge.DateModified == null)
+            {
+                result.isSuccess = false;
+                result.message = "Date Modified must be included";
+                return result;
+            }
+
+            // check lat/lon in range
+            if (bridge.Latitude > 90 || bridge.Latitude < -90 || bridge.Longitude > 180 || bridge.Longitude < -180)
+            {
+                result.isSuccess = false;
+                result.message = "Latitude must be between -90 and 90; Longitude must be between -180 and 180";
+                return result;
+            }
+
+            if (bridge.Latitude.GetType() != typeof(Double) || bridge.Longitude.GetType() != typeof(Double))
+            {
+                result.isSuccess = false;
+                result.message = "Latitude and Longitude must be included and of correct data type";
+                return result;
+            }
+
+           
             bridge.NumberOfVotes = 0;    // new bridge
             bridge.isLocked = false;
 
