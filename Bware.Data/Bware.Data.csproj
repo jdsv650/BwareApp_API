@@ -94,6 +94,10 @@
     <Compile Include="Migrations\201510182344040_Add_WeightStraight_TriAxle_to_bridge.Designer.cs">
       <DependentUpon>201510182344040_Add_WeightStraight_TriAxle_to_bridge.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511062317476_ADD_Message.cs" />
+    <Compile Include="Migrations\201511062317476_ADD_Message.Designer.cs">
+      <DependentUpon>201511062317476_ADD_Message.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -134,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510182344040_Add_WeightStraight_TriAxle_to_bridge.resx">
       <DependentUpon>201510182344040_Add_WeightStraight_TriAxle_to_bridge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511062317476_ADD_Message.resx">
+      <DependentUpon>201511062317476_ADD_Message.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

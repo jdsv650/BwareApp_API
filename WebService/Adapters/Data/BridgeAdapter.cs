@@ -480,6 +480,7 @@ namespace WebService.Adapters.Data
                 theBridge.Township = bridge.Township;
                 theBridge.WeightCombination = bridge.WeightCombination;
                 theBridge.WeightDouble = bridge.WeightDouble;
+                theBridge.WeightStraight_TriAxle = bridge.WeightStraight_TriAxle;
                 theBridge.WeightStraight = bridge.WeightStraight;
                 theBridge.Zip = bridge.Zip;
 
