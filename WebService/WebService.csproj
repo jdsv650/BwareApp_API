@@ -185,7 +185,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adapters\Data\BridgeAdapter.cs" />
+    <Compile Include="Adapters\Data\MessageAdapter.cs" />
     <Compile Include="Adapters\Interface\IBridgeAdapter.cs" />
+    <Compile Include="Adapters\Interface\IMessageAdapter.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -223,6 +225,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BridgeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
