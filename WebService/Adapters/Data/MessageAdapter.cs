@@ -25,7 +25,7 @@ namespace WebService.Adapters.Data
             var sourcePoint = string.Format("POINT({0} {1})", lon.ToString().Replace(',', '.'), lat.ToString().Replace(',', '.'));
             var currentLocation = DbGeography.PointFromText(sourcePoint, 4326);
             //1609.34 meters per miles - req meters 
-            messages = db.Messages.Where(m => m.MessageLocation.Distance(currentLocation) < miles * 1609.34).ToList();
+            messages = db.Messages.Where(m => m.MessageLocation.Distance(currentLocation) < miles * 1609.34).OrderByDescending(t => t.DateCreated).Take(1000).ToList();
 
             return messages;
         }
