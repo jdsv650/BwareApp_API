@@ -29,7 +29,7 @@ namespace WebService.Adapters.Data
             bridgeCountResults = (from b in db.Bridges
                  orderby b.State
                  group b by b.State into stateGrp
-                 select new BridgeCountResult() { NumberOfBridges = stateGrp.Count(), State = stateGrp.Key }).ToList();
+                 select new BridgeCountResult() { NumberOfBridges = stateGrp.Count(), State = stateGrp.Key }).OrderByDescending(b => b.NumberOfBridges).Take(5).ToList();
 
             return bridgeCountResults;
         }
