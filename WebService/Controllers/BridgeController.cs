@@ -88,5 +88,12 @@ namespace WebService.Controllers
             return results;
         }
 
+        [HttpGet]
+        public IEnumerable<Models.BridgeCountResult> GetCountForStates()
+        {
+            var result = _adapter.getBridgeCountStates();
+            return result;
+        }
+
     }
 }

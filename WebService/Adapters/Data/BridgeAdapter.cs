@@ -7,12 +7,33 @@ using Bware.Data;
 using System.Web.Http;
 using System.Data.Entity.Spatial;
 using System.Data.Entity.Core.Objects;
+using WebService.Models;
 
 namespace WebService.Adapters.Data
 {
     public class BridgeAdapter : Adapters.Interface.IBridgeAdapter
     {
         const int numHoursBetweenCreate = 1;  // how often should a user be able to create a new bridge? once a week? roles? trust?
+
+
+        public IEnumerable<BridgeCountResult> getBridgeCountStates()
+        {
+            var db = new BwareContext();
+            var bridgeCountResults = new List<Models.BridgeCountResult>();
+           /***     
+            SELECT Count(*) as BridgeCount, [State]
+            FROM [dbo].[Bridges]
+            GROUP BY [State]
+           ***/
+
+            bridgeCountResults = (from b in db.Bridges
+                 orderby b.State
+                 group b by b.State into stateGrp
+                 select new BridgeCountResult() { NumberOfBridges = stateGrp.Count(), State = stateGrp.Key }).ToList();
+
+            return bridgeCountResults;
+        }
+
 
         public IEnumerable<Bridge> getBridgesWithinMiles(double lat, double lon, int miles)
         {

@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebService.Models;
 
 namespace WebService.Adapters.Interface
 {
     interface IBridgeAdapter
     {
         // IEnumerable<Bridge> getAllBridges();
+        IEnumerable<BridgeCountResult> getBridgeCountStates();
         IEnumerable<Bridge> getBridgesWithinMiles(double lat, double lon, int miles);
         Bridge getBridgeByLocation(double lat, double lon);
         Models.ApiResult getByInfo(string country, string state, string county, string town = "");
