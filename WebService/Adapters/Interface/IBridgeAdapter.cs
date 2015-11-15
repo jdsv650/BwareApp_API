@@ -10,7 +10,6 @@ namespace WebService.Adapters.Interface
 {
     interface IBridgeAdapter
     {
-        // IEnumerable<Bridge> getAllBridges();
         IEnumerable<BridgeCountResult> getBridgeCountStates();
         IEnumerable<Bridge> getBridgesWithinMiles(double lat, double lon, int miles);
         Bridge getBridgeByLocation(double lat, double lon);
@@ -21,8 +20,6 @@ namespace WebService.Adapters.Interface
         Models.ApiResult increaseVote(int bridgeId, String userName);
         Models.ApiResult decreaseVote(int bridgeId, String userName, bool isEdit);
 
-
-        Models.ApiResult saveBridgeBatch(Bridge bridge);
     }
 
 }

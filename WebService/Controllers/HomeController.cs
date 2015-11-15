@@ -14,5 +14,21 @@ namespace WebService.Controllers
 
             return View();
         }
+
+        public ActionResult PrivacyPolicy()
+        {
+            ViewBag.Title = "Home Page";
+
+            return View();
+
+        }
+
+        public ActionResult PrivacyMini()
+        {
+            ViewBag.Title = "Home Page";
+
+            return View();
+
+        }
     }
 }

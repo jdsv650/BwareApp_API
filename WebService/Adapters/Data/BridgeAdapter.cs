@@ -13,8 +13,7 @@ namespace WebService.Adapters.Data
 {
     public class BridgeAdapter : Adapters.Interface.IBridgeAdapter
     {
-        const int numHoursBetweenCreate = 1;  // how often should a user be able to create a new bridge? once a week? roles? trust?
-
+        const int numDaysBetweenCreate = 7;  // allow create once a week
 
         public IEnumerable<BridgeCountResult> getBridgeCountStates()
         {
@@ -58,8 +57,6 @@ namespace WebService.Adapters.Data
             var bridge = new Bridge();
             var db = new BwareContext();
 
-           // if (lat > 90 || lat < -90 || lon > 180 || lon < -180)   {  }
-            // may need to give a bit here instead of =   -- Add isActive check
             bridge = db.Bridges.Where(b => b.Latitude <= lat + 0.0001 && b.Latitude >= lat - 0.0001 && b.Longitude <= lon + 0.0001 && b.Longitude >= lon - 0.0001 && b.isActive == true).FirstOrDefault();
 
             return bridge;
@@ -94,11 +91,11 @@ namespace WebService.Adapters.Data
             }
 
             if (town == null || town == "")
-            {   // -- Add isActive check
+            { 
                 bridges = db.Bridges.Where(b => b.Country == country && b.State == state && b.County == county && b.isActive == true).ToList();
             }
             else // town info passed in so match that too
-            {   // -- Add isActive check
+            {  
                 bridges = db.Bridges.Where(b => b.Country == country && b.State == state && b.County == county && b.Township.Contains(town) && b.isActive == true).ToList();
             }
 
@@ -249,16 +246,12 @@ namespace WebService.Adapters.Data
 
             try
             {
-                // 5 minutes for testing!!!!!!
                 var theBridges = new List<Bridge>();
                 theBridges = null;
                 var isAlreadyCreated = false;
+                var oneWeekAgo = DateTime.UtcNow.AddDays(-numDaysBetweenCreate);
 
-                var fiveMinutesAgo = DateTime.UtcNow.AddMinutes(-5);
-                var oneWeekAgo = DateTime.UtcNow.AddDays(-7);
-
-                //************************** change to oneWeekAgo before app gets released *************************************************
-                isAlreadyCreated = db.Bridges.Where(b => b.UserCreated == bridge.UserCreated && b.DateCreated > fiveMinutesAgo).ToList().Any(); 
+                isAlreadyCreated = db.Bridges.Where(b => b.UserCreated == bridge.UserCreated && b.DateCreated > oneWeekAgo).ToList().Any(); 
                 if (isAlreadyCreated)
                 {
                     result.isSuccess = false;
@@ -314,7 +307,7 @@ namespace WebService.Adapters.Data
         }
 
 
-
+        /**** Only for seeding data 
         public Models.ApiResult saveBridgeBatch(Bridge bridge)
         {
             var db = new BwareContext();
@@ -409,6 +402,7 @@ namespace WebService.Adapters.Data
             }
         }
 
+    ******/
 
         public Models.ApiResult updateBridge(Bridge bridge)
         {
