@@ -21,7 +21,7 @@ namespace WebService
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/bwarebootstrap.css",
                       "~/Content/site.css"));
         }
     }
