@@ -127,7 +127,7 @@ namespace WebService.Controllers
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -260,9 +260,9 @@ namespace WebService.Controllers
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    OAuthDefaults.AuthenticationType);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
@@ -344,12 +344,12 @@ namespace WebService.Controllers
 
             if (!registerResult.Succeeded)
             {
-               // GetErrorResult(registerResult);
+                // GetErrorResult(registerResult);
                 result.message = registerResult.Errors.FirstOrDefault();
                 return result;
             }
 
-          //  return Ok();
+            //  return Ok();
             result.isSuccess = true;
             result.message = "User registered successfully";
             return result;
@@ -379,6 +379,59 @@ namespace WebService.Controllers
         }
          ********************/
 
+        //
+        // POST: /Account/ForgotPassword
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<Models.ApiResult> ForgotPassword(UserEmail userEmail)
+        {
+            var result = new Models.ApiResult();
+            result.isSuccess = false;
+            result.data = null;
+            result.multipleData = null;
+
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByNameAsync(userEmail.email);
+                if (user == null)
+                {
+                    // the user does not exist
+                    result.message = "User not found";
+                    return result;
+                }
+
+                try
+                {
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    String code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                    if (String.IsNullOrWhiteSpace(code))
+                    {
+                        result.message = "Reset password failed to generate token";
+                        return result;
+                    }
+                    // send token back - debug only
+                    // result.message = code;
+
+                    var url = Uri.EscapeUriString("http://www.bwaremap.com/User/ResetPassword?code=") + code.Replace(" ", "+");  // Hack for + -> blank sp token
+                    await UserManager.SendEmailAsync(user.Id, "Password Reset Request for B*ware", "Please reset your password by clicking <a href=\"" + url + "\">here</a>");
+        
+                    result.isSuccess = true;
+                    result.message = "Reset Link Sent";
+                }
+                catch
+                {
+                    result.message = "Reset password failed";
+                    return result;
+                }
+
+                return result;
+            }
+
+            result.message = "Username Invalid";
+            return result;
+        }
+
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
@@ -407,7 +460,7 @@ namespace WebService.Controllers
             result = await UserManager.AddLoginAsync(user.Id, info.Login);
             if (!result.Succeeded)
             {
-                return GetErrorResult(result); 
+                return GetErrorResult(result);
             }
             return Ok();
         }

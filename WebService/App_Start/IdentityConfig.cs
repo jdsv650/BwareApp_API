@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using WebService.Models;
+using System.Net.Mail;
 
 namespace WebService
 {
@@ -34,12 +35,37 @@ namespace WebService
                 RequireLowercase = false,
                 RequireUppercase = false,
             };
+
+            manager.EmailService = new EmailService();
+
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
                 manager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
+        }
+    }
+
+
+    public class EmailService : IIdentityMessageService
+    {
+        public async Task SendAsync(IdentityMessage message)
+        {
+            // convert IdentityMessage to a MailMessage
+            var email =
+               new MailMessage(new MailAddress("support@bwaremap.com"),
+               new MailAddress(message.Destination))
+               {
+                   Subject = message.Subject,
+                   Body = message.Body,
+                   IsBodyHtml = true
+               };
+
+            using (var client = new SmtpClient()) // SmtpClient configuration comes from config file
+            {
+                await client.SendMailAsync(email);
+            }
         }
     }
 }

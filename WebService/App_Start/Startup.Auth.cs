@@ -10,6 +10,7 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using WebService.Providers;
 using WebService.Models;
+using System.Configuration;
 
 namespace WebService
 {
@@ -57,9 +58,9 @@ namespace WebService
             //    consumerKey: "",
             //    consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //    appId: "",
-            //    appSecret: "");
+            app.UseFacebookAuthentication(
+                appId: ConfigurationManager.AppSettings["fbAppId"],
+                appSecret: ConfigurationManager.AppSettings["fbAppSecret"]);
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
