@@ -153,21 +153,23 @@ namespace WebService.Adapters.Data
                 }
                 else
                 {
-                    // Check to see if bridge can be deleted (marked isActive assigned to false) first!!!!!!
-                    if (bridge.User1Reason == null || bridge.User2Reason == null || bridge.User3Reason == null)
+                    // Check to see if user created bridge - if not do additional checks
+                    if (bridge.UserCreated != System.Web.HttpContext.Current.User.Identity.Name)
                     {
-                        result.message = "Bridge must have at least 3 down votes to be removed";
-                        return result;
+                        // Check to see if bridge can be deleted (marked isActive assigned to false) first!!!!!!
+                        if (bridge.User1Reason == null || bridge.User2Reason == null || bridge.User3Reason == null)
+                        {
+                            result.message = "Bridge must have at least 3 down votes to be removed";
+                            return result;
+                        }
+                        // false == 0 == mark for delete -- true == 1 == mark for edit
+                        // if at least 2/3 are marked as edit don't allow remove (only edit)
+                        if (allowDelete(bridge) == false)
+                        {
+                            result.message = "Bridge must have at least 2 down votes of correct type to be removed";
+                            return result;
+                        }
                     }
-                    // false == 0 == mark for delete -- true == 1 == mark for edit
-                    // if at least 2/3 are marked as edit don't allow remove (only edit)
-                    if (allowDelete(bridge) == false)
-                    {
-                        result.message = "Bridge must have at least 2 down votes of correct type to be removed";
-                        return result;
-                    }
-
-                    // Delete only one per week???????
 
                     // Mark isActive as false for soft delete
                     bridge.isActive = false;
