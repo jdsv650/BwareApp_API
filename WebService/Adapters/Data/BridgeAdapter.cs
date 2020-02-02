@@ -13,7 +13,7 @@ namespace WebService.Adapters.Data
 {
     public class BridgeAdapter : Adapters.Interface.IBridgeAdapter
     {
-        const int numDaysBetweenCreate = 7;  // allow create once a week
+        const int numHoursBetweenCreate = 1;  // allow create once per hour
 
         public IEnumerable<BridgeCountResult> getBridgeCountStates()
         {
@@ -249,9 +249,9 @@ namespace WebService.Adapters.Data
                 var theBridges = new List<Bridge>();
                 theBridges = null;
                 var isAlreadyCreated = false;
-                var oneWeekAgo = DateTime.UtcNow.AddDays(-numDaysBetweenCreate);
+                var hoursAgoTime = DateTime.UtcNow.AddHours(-numHoursBetweenCreate);
 
-                isAlreadyCreated = db.Bridges.Where(b => b.UserCreated == bridge.UserCreated && b.DateCreated > oneWeekAgo).ToList().Any(); 
+                isAlreadyCreated = db.Bridges.Where(b => b.UserCreated == bridge.UserCreated && b.DateCreated > hoursAgoTime).ToList().Any(); 
                 if (isAlreadyCreated)
                 {
                     result.isSuccess = false;
