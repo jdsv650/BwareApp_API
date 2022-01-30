@@ -194,31 +194,54 @@ namespace WebService.Controllers
         }
 
         // POST api/Account/RemoveLogin
-        //[Route("DeleteUser")]
         [AllowAnonymous]
         [HttpGet]
         public async Task<Models.ApiResult> DeleteUser(String user)
         {
             var result = new Models.ApiResult();
             result.isSuccess = false;
+            result.message = "";
             result.data = null;
             result.multipleData = null;
 
             if (!ModelState.IsValid)
             {
-                result.message = "Call Failed - Parameters Incorrect";
+                result.message = "Parameters Incorrect";
                 return result;
             }
 
-            IdentityResult opResult;
-
             var theUser = UserManager.FindByName(user);
-            opResult = await UserManager.DeleteAsync(theUser);
+            if(theUser == null)
+            {
+                result.message = "User Not Found";
+                return result;
+            }
 
-          //  if (!result.Succeeded)
-         //   {
-          //      return GetErrorResult(result);
-         //   }
+            IdentityResult identResult;
+            identResult = await UserManager.DeleteAsync(theUser);
+
+            if (identResult == null)
+            {
+                result.message = "Internal Server Error";
+                return result;
+            }
+
+            if (!identResult.Succeeded)
+            {
+                if (identResult.Errors.Count() >= 1)
+                {
+                    result.message = identResult.Errors.FirstOrDefault();
+                }
+                else
+                {
+                    result.message = "Unknown Server Error - Try Again";
+                }
+            }
+            else
+            {
+                result.isSuccess = true;
+                result.message = user + " deleted";
+            }
 
             return result;
         }
