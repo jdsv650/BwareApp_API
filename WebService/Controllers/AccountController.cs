@@ -194,6 +194,38 @@ namespace WebService.Controllers
         }
 
         // POST api/Account/RemoveLogin
+        //[Route("DeleteUser")]
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<Models.ApiResult> DeleteUser(String user)
+        {
+            var result = new Models.ApiResult();
+            result.isSuccess = false;
+            result.data = null;
+            result.multipleData = null;
+
+            if (!ModelState.IsValid)
+            {
+                result.message = "Call Failed - Parameters Incorrect";
+                return result;
+            }
+
+            IdentityResult opResult;
+
+            var theUser = UserManager.FindByName(user);
+            opResult = await UserManager.DeleteAsync(theUser);
+
+          //  if (!result.Succeeded)
+         //   {
+          //      return GetErrorResult(result);
+         //   }
+
+            return result;
+        }
+
+
+
+        // POST api/Account/RemoveLogin
         [Route("RemoveLogin")]
         public async Task<IHttpActionResult> RemoveLogin(RemoveLoginBindingModel model)
         {
@@ -354,6 +386,20 @@ namespace WebService.Controllers
             result.message = "User registered successfully";
             return result;
         }
+
+
+       
+        [HttpGet]
+        [AllowAnonymous]
+        public Models.ApiResult Test()
+        {
+            var result = new Models.ApiResult();
+            result.data = null;
+            result.isSuccess = true;
+            result.message = "Test OK";
+            return result;
+        }
+
 
         /***** ORIGINAL ******************************************************************************
         // POST api/Account/Register

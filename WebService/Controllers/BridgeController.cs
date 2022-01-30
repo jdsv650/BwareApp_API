@@ -20,14 +20,25 @@ namespace WebService.Controllers
         }
 
         // GET: api/Bridge
-       /* don't allow get all
+        /* don't allow get all
+         [HttpGet]
+         public IEnumerable<Bridge> GetAll()
+         {
+             var result = _adapter.getAllBridges();
+             return result;
+         }
+         */
+
         [HttpGet]
-        public IEnumerable<Bridge> GetAll()
+        [AllowAnonymous]
+        public Models.ApiResult Test()
         {
-            var result = _adapter.getAllBridges();
+            var result = new Models.ApiResult();
+            result.data = null;
+            result.isSuccess = true;
+            result.message = "Test OK";
             return result;
         }
-        */
 
         [HttpGet]
       //  [System.Web.Http.Route("Bridge/GetByMiles")]
