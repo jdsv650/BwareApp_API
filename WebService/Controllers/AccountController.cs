@@ -193,9 +193,8 @@ namespace WebService.Controllers
             return Ok();
         }
 
-        // POST api/Account/RemoveLogin
-        [AllowAnonymous]
-        [HttpGet]
+        // Delete api/Account/DeleteUser
+        [HttpDelete]
         public async Task<Models.ApiResult> DeleteUser(String user)
         {
             var result = new Models.ApiResult();
