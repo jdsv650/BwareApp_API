@@ -48,6 +48,8 @@ namespace WebService.Controllers
             return result;
         }
 
+      
+
         [HttpGet]
         public Bridge GetByLocation(double lat, double lon)
         {

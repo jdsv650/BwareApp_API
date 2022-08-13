@@ -12,8 +12,9 @@ namespace Bware.Data.Model
     [DataContract]
     public class Bridge
     {
-        public DbGeography BridgeLocation { get; set; }
 
+        [DataMember]
+        public DbGeography BridgeLocation { get; set; }
         [DataMember]
         public int BridgeId { get; set; }
         [DataMember]

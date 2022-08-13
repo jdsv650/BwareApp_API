@@ -52,6 +52,7 @@ namespace WebService.Adapters.Data
             return bridges;
         }
 
+
         public Bridge getBridgeByLocation(double lat, double lon)
         {
             var bridge = new Bridge();

@@ -12,6 +12,7 @@ namespace WebService.Adapters.Interface
     {
         IEnumerable<BridgeCountResult> getBridgeCountStates();
         IEnumerable<Bridge> getBridgesWithinMiles(double lat, double lon, int miles);
+
         Bridge getBridgeByLocation(double lat, double lon);
         Models.ApiResult getByInfo(string country, string state, string county, string town = "");
         Models.ApiResult removeBridgeByLocation(double lat, double lon);
